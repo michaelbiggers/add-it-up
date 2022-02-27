@@ -1,0 +1,90 @@
+:root {
+    --primary-dark: #252525;
+    --primary-light: #C4C4C4;
+}
+body {
+    font-family:sans-serif;
+}
+
+header {
+    height:40px;
+    background: var(--primary-dark);
+    display:flex;
+    align-items:center;
+    padding:5px 25px;;
+}
+.app-name {
+    color:#fff;
+}
+.list-header {
+    font-size:36px;
+    font-weight:bolder;
+    margin-top:1rem;
+    padding-left:1rem;
+}
+/* list item props */
+.empty-list {
+    font-style:italic;
+    margin-top:1rem;
+    padding-left:1rem;
+}
+.list__item {
+    display:flex;
+    align-items:center;
+    border-bottom:solid 1px #eee;
+    margin:0 1rem;
+    padding:.75rem .5rem;
+}
+
+.item__completed {
+    border-radius:10px;
+    width:30px;
+    height:30px;
+    border:solid 1px;
+    margin-right:1rem;
+}
+.item__title{
+    width:200px;
+    font-size:22px;
+}
+.item__price {
+    width:50px;
+    font-size:18px;
+    text-align:right;
+}
+.item__quantity {
+    font-size:18px;
+    width:50px;
+    text-align:right;
+}
+/* action bar */
+.action-bar {
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:100px;
+    border-top:solid 1px var(--primary-light);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+}
+.current-cost {
+    font-size:40px;
+}
+.btn {
+    background:var(--primary-dark);
+    color:white;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+}
+.btn--new-item {
+    position:absolute;
+    right:1rem;
+    font-size:40px;
+    text-align:center;
+    font-weight:lighter;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
