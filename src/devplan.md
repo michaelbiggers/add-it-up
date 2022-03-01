@@ -6,10 +6,10 @@ Will need "complete" boolean, item title, item price, item quantity, category fo
 #### General Data and Layout
 - render all list items to the page (COMPLETE)
 - build layout to include each piece of data (COMPLETE)
-- make existing items editable
-- create current-cost component
+- make existing items editable (COMPLETE)
+- create current-cost component (COMPLETE)
 - add styling for completed items
-- move completed items to end of rendered list
+- move completed items to end of rendered list (COMPLETE)
 - group by category
 
 #### Updating Data
