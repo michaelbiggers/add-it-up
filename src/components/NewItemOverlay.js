@@ -15,6 +15,7 @@ function NewItemOverlay(props) {
                         placeholder="E.g., Laundry detergent" 
                         onChange={props.storeText}
                         value={props.storedTitle}
+                        autoFocus
                         />
                      <input 
                         type="text"
