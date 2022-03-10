@@ -54,14 +54,10 @@ header {
     border:solid 1px;
     margin-right:1rem;
 }
-.item__title{
-    width:200px;
-    font-size:22px;
-    border:none;
-}
+
 .title-cost-container {
     display:flex;
-    flex-direction:column;
+    flex-direction:row;
 }
 .price-wrapper{
     display:flex;
@@ -79,14 +75,18 @@ header {
     font-style:italic;
     color:var(--accent-dark)
 }
+.item__title{
+    width:200px;
+    font-size:16px;
+    border:none;
+}
 .item__quantity {
-    font-size:18px;
-    width:50px;
-    font-size:12px;
+    width:auto;
+    padding:.5rem;
+    font-size:14px;
     font-style:italic;
     border:none;
-    color:var(--accent-dark)
-   
+    color:var(--accent-dark);
 }
 
 /* action bar */
@@ -106,17 +106,53 @@ header {
     font-size:40px;
 }
 .btn {
-    background:var(--primary-dark);
-    color:white;
     width:50px;
     height:50px;
-    border-radius:50%;
 }
 .btn--new-item {
     position:absolute;
     right:1rem;
-    font-size:40px;
-    text-align:center;
-    font-weight:lighter;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    cursor:pointer;
+}
+
+/* new item overlay */
+.itemOverlay {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:rgba(0,0,0,.4);
+    display:flex;
+    align-items:flex-end;
+}
+.itemOverlay__container {
+    background:#fff;
+    padding:1rem 1rem 4rem 1rem;
+    border-radius:10px 10px 0 0;
+}
+.itemOverlay .item__title{
+    width:200px;
+    font-size:16px;
+    border:none;
+    padding:.5rem;
+}
+.itemOverlay .item__category {
+    width:200px;
+    padding:.5rem;
+    font-size:14px;
+    border:none;
+}
+.itemOverlay .item__quantity {
+    width:200px;
+    padding:.5rem;
+    font-size:14px;
+    font-style:italic;
+    border:none;
+    color:var(--accent-dark);
+    margin-bottom:1rem;
+}
+.itemOverlay button{
+    margin-right:1rem;
 }
