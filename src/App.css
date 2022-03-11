@@ -36,11 +36,12 @@ header {
 }
 .list__item {
     display:flex;
-    align-items:center;
+    align-items:stretch;
     border-bottom:solid 1px #eee;
     margin:0 1rem;
-    padding:.75rem .5rem;
+    padding:0 .5rem;
     position:relative;
+
 }
 .list__item.completed{
     opacity:.6;
@@ -53,6 +54,7 @@ header {
     height:30px;
     border:solid 1px;
     margin-right:1rem;
+    align-self:center;
 }
 
 .title-cost-container {
@@ -67,8 +69,12 @@ header {
 .item__price {
     width:5em;
     font-size:18px;
-    padding-bottom:0;
+    padding:1rem 0;
     border:none;
+    border-left:dashed 1px #eee;
+    display:flex;
+    align-items:center;
+    justify-content: center;;
 }
 .quantity-wrapper{
     font-size:12px;
@@ -79,6 +85,9 @@ header {
     width:200px;
     font-size:16px;
     border:none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 .item__quantity {
     width:auto;

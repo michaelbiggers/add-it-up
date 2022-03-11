@@ -9,7 +9,7 @@ import ActionBar from './components/ActionBar';
 function App() {
   const [listData, setListData] = React.useState([
     {
-      key: 1,
+      key: "QHG0_lWJJNSJ_ZGaqM2GH",
       itemTitle: "milk",
       completed: false,
       itemPrice: 2,
@@ -17,7 +17,7 @@ function App() {
       category: "Dairy"
     },
     {
-      key: 2,
+      key: "fYoq6EpxlXyZzh-Uy-Q0X",
       itemTitle: "cheese",
       completed: false,
       itemPrice: 1,
@@ -25,7 +25,7 @@ function App() {
       category: "Dairy"
     },
     {
-      key: 3,
+      key: "edE-pRTkStlE1tYlo-yEQ",
       itemTitle: "yogurt",
       completed: false,
       itemPrice: 1,
@@ -33,7 +33,7 @@ function App() {
       category: "Dairy"
     },
     {
-      key: 4,
+      key: "PauwA2Tny5jVWcYOnGREp",
       itemTitle: "ground beef",
       completed: true,
       itemPrice: 5,
@@ -43,12 +43,16 @@ function App() {
   ]
   )
   const [overlay, setOverlay] = React.useState(false)
-  const initialNewItem = {
+  // const [createMode, setCreateMode] = React.useState(false)
+  // const [editMode, setEditMode] = React.useState(false)
+  const [currentItemId, setCurrentItemId] = React.useState("")
+
+  const initialTempItem = [{
     itemTitle: "",
     itemQuantity: "",
-    category:""
-  }
-  const [newItem, setNewItem] = React.useState(initialNewItem)
+    category: ""
+  }]
+  const [tempItem, setTempItem] = React.useState(initialTempItem)
   let totalCost = 0
 
   // updateTotal()
@@ -60,38 +64,60 @@ function App() {
         id={item.key}
         title={item.itemTitle}
         completed={item.completed}
-        onChange={toggleComplete}
         price={item.itemPrice}
         quantity={item.itemQuantity}
+        onChange={toggleComplete}
         deleteItem={deleteItem}
+        // openEditPane={toggleNewItemOverlay}
+        handleEditPane={updateItem}
       />
     )
   })
-  function toggleNewItemOverlay() {
+  function toggleNewItemOverlay(event) {
+    // if(event.target.className == "item__title") {
+    //   setCurrentItemId(event.target.closest(".list__item").id)
+    //   console.log(currentItemId)
+    //   const currentItem = listData.filter(item => item.key == currentItemId)
+    //   console.log(currentItem)
+    //   // setNewItem(currentItem[0])
+    // }
     setOverlay(prevState => !prevState)
   }
-  function storeTextInput(event) {
-    const { name, value, type, checked } = event.target
-    
-    setNewItem(prevState => ({...prevState, [name]:value}))
-    console.log(newItem)
-  }
-  function createItem() {
 
+  function storeTextInput(event) {
+    const { name, value } = event.target
+    setTempItem(prevState => ({ ...prevState, [name]: value }))
+  }
+  function getCurrentItemId(event) {
+    setCurrentItemId(event.target.closest(".list__item").id)
+  }
+
+  function createItem() {
     const newID = nanoid()
     const newDetails = {
       key: newID,
-      itemTitle: newItem.itemTitle,
-      itemQuantity: newItem.itemQuantity,
+      itemTitle: tempItem.itemTitle,
+      itemQuantity: tempItem.itemQuantity,
       completed: false,
       itemPrice: 0,
-      category: newItem.category
+      category: tempItem.category
     }
     setListData(prevState => [...prevState, newDetails])
-    setNewItem(initialNewItem)
+    setTempItem(initialTempItem)
+    // setCreateMode(false)
+  }
+  function updateItem(event){
+    getCurrentItemId(event)
+    console.log(currentItemId)
+    setTempItem(listData.filter(item => item.key == currentItemId))
+    console.log(tempItem)
+    
+    toggleNewItemOverlay()
     
   }
+
   function toggleComplete(event) {
+
     const { name, value, type, checked } = event.target
     setListData(prevState => prevState.map(item => item.key == event.target.parentNode.id ? { ...item, [name]: checked } : item))
   }
@@ -151,13 +177,19 @@ function App() {
         {allListItems.length > 0 ? allListItems : <p className="empty-list">Add your first item </p>}
       </div>
       <ActionBar currentTotal={totalCost} handleClick={toggleNewItemOverlay} />
+
       {overlay &&
-       <NewItemOverlay 
-        closeOverlay={toggleNewItemOverlay} 
-        saveItem={createItem} 
-        storeText={storeTextInput}
-        storedTitle={newItem.itemTitle}  
-        storedQuantity={newItem.itemQuantity}
+        <NewItemOverlay
+          closeOverlay={toggleNewItemOverlay}
+          saveItem={createItem}
+          deleteItem={deleteItem}
+          storeText={storeTextInput}
+          storedTitle={tempItem.itemTitle}
+          storedCategory={tempItem.category}
+          storedQuantity={tempItem.itemQuantity}
+
+        // editMode={editMode}
+        // createMode={createMode}
         />}
 
     </div>

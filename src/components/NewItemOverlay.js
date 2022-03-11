@@ -20,6 +20,7 @@ function NewItemOverlay(props) {
                      <input 
                         type="text"
                         className="item__category"
+                        name="category"
                         placeholder="Category (dairy, meat, etc)"
                         onChange={props.storeText}
                         value={props.storedCategory}
@@ -39,8 +40,12 @@ function NewItemOverlay(props) {
 
                     {/* <span className="price-wrapper">$<input type="number" className="item__price" name="itemPrice" onChange={props.onChange} value={props.price} min="0" step="0.01" /> </span> */}
                 </form>
-                <button onClick={props.saveItem}>Save</button>
-                <button onClick={props.closeOverlay}>Cancel</button>
+                
+                <button className="btn btn--update" onClick={props.saveItem}>Save</button>
+                <button className="btn btn--update">Update</button>
+                <button className="btn btn--cancel" onClick={props.closeOverlay}>Cancel</button>
+                <button className="btn btn--delete" onClick={props.deleteItem}>Delete</button>
+                {/* {props.editMode && <button className="btn btn--delete" onClick={props.deleteItem}>Delete</button>} */}
                 
             </div>
         </div>
