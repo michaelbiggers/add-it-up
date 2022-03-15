@@ -8,12 +8,12 @@ Will need "complete" boolean, item title, item price, item quantity, category fo
 - build layout to include each piece of data (COMPLETE)
 - make existing items editable (COMPLETE)
 - create current-cost component (COMPLETE)
-- add styling for completed items
+- add styling for completed items (COMPLETE)
 - move completed items to end of rendered list (COMPLETE)
 - group by category
 
 #### Updating Data
 - set up live cost total
-- add new item functionality
+- add new item functionality (COMPLETE)
 - add ability to delete item (slide to delete?)
-- no context view for already created items; these are updated inline
+- no context view for already created items; these are updated inline 

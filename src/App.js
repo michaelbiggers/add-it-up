@@ -3,6 +3,7 @@ import './App.css';
 import { nanoid } from 'nanoid'
 import ListItem from './components/ListItem';
 import NewItemOverlay from './components/NewItemOverlay'
+import EditItemOverlay from './components/EditItemOverlay'
 import Header from './components/Header'
 import ActionBar from './components/ActionBar';
 
@@ -43,9 +44,6 @@ function App() {
   ]
   )
   const [overlay, setOverlay] = React.useState(false)
-  // const [createMode, setCreateMode] = React.useState(false)
-  // const [editMode, setEditMode] = React.useState(false)
-  const [currentItemId, setCurrentItemId] = React.useState("")
 
   const initialTempItem = [{
     itemTitle: "",
@@ -55,7 +53,10 @@ function App() {
   const [tempItem, setTempItem] = React.useState(initialTempItem)
   let totalCost = 0
 
-  // updateTotal()
+
+  const [currentItemId, setCurrentItemId] = React.useState("")
+  console.log(`Current top ID is ${currentItemId}`)
+
 
   const allListItems = listData.map(item => {
     return (
@@ -66,30 +67,22 @@ function App() {
         completed={item.completed}
         price={item.itemPrice}
         quantity={item.itemQuantity}
-        onChange={toggleComplete}
-        deleteItem={deleteItem}
-        // openEditPane={toggleNewItemOverlay}
+        toggleComplete={toggleComplete}
+        setCurrentItemId={setCurrentItemId}
         handleEditPane={updateItem}
+        setTempItem={setTempItem}
+        listData={listData}
       />
     )
   })
+
   function toggleNewItemOverlay(event) {
-    // if(event.target.className == "item__title") {
-    //   setCurrentItemId(event.target.closest(".list__item").id)
-    //   console.log(currentItemId)
-    //   const currentItem = listData.filter(item => item.key == currentItemId)
-    //   console.log(currentItem)
-    //   // setNewItem(currentItem[0])
-    // }
     setOverlay(prevState => !prevState)
   }
 
   function storeTextInput(event) {
     const { name, value } = event.target
     setTempItem(prevState => ({ ...prevState, [name]: value }))
-  }
-  function getCurrentItemId(event) {
-    setCurrentItemId(event.target.closest(".list__item").id)
   }
 
   function createItem() {
@@ -104,16 +97,10 @@ function App() {
     }
     setListData(prevState => [...prevState, newDetails])
     setTempItem(initialTempItem)
-    // setCreateMode(false)
   }
-  function updateItem(event){
-    getCurrentItemId(event)
-    console.log(currentItemId)
-    setTempItem(listData.filter(item => item.key == currentItemId))
-    console.log(tempItem)
-    
-    toggleNewItemOverlay()
-    
+  function updateItem(event) {
+    setOverlay(!overlay)
+
   }
 
   function toggleComplete(event) {
@@ -182,15 +169,12 @@ function App() {
         <NewItemOverlay
           closeOverlay={toggleNewItemOverlay}
           saveItem={createItem}
-          deleteItem={deleteItem}
           storeText={storeTextInput}
           storedTitle={tempItem.itemTitle}
           storedCategory={tempItem.category}
           storedQuantity={tempItem.itemQuantity}
-
-        // editMode={editMode}
-        // createMode={createMode}
         />}
+
 
     </div>
   );
