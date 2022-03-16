@@ -183,9 +183,6 @@ header {
     text-align:center;
     margin:auto;
 }
-.overlay button{
-    margin-right:1rem;
-}
 .btnContainer {
     display:flex;
     justify-content:center;
@@ -201,7 +198,6 @@ header {
 }
 .btn--delete {
     color:#ff0000;
-    
     letter-spacing:1px;
     text-transform:uppercase;
 }

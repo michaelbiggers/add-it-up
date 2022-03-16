@@ -39,7 +39,7 @@ function App() {
       key: "PauwA2Tny5jVWcYOnGREp",
       itemTitle: "ground beef",
       completed: true,
-      itemPrice: 3.50,
+      itemPrice: 3.4,
       itemQuantity: 1,
       category: "Meat"
     }
@@ -109,7 +109,9 @@ function App() {
     setListData(prevState => [...prevState, newDetails])
     setTempItem(initialTempItem)
   }
-
+  function savePrice(){
+    console.log(currentItemId)
+  }
   function updateItem(event) {
     setOverlay(!overlay)
   }
@@ -152,15 +154,15 @@ function App() {
         if (item.itemPrice === null) {
           price = 0
         } else {
-          price = parseFloat(item.itemPrice).toFixed(2)
+          price = parseFloat(item.itemPrice)
         }
         if (!item.itemQuantity) {
           quantity = 1
         } else {
           quantity = parseInt(item.itemQuantity)
         }
-
-        return totalCost += (price * quantity)
+       return totalCost += (price * quantity)
+       
 
       })
   }
@@ -188,8 +190,10 @@ function App() {
       {priceOverlay &&
         <PriceUpdater 
           togglePriceOverlay={togglePriceOverlay}
-          storeText={storeTextInput}
           storedPrice={tempItem.itemPrice}
+          storeText={storeTextInput}
+          savePrice={savePrice}
+          setCurrentItemId={setCurrentItemId}
         />
       }
 

@@ -31,7 +31,13 @@ function ListItem(props) {
             </div>
             <span
                 className="item__price"
-                onClick={props.togglePriceOverlay}
+                onClick={() => {
+                            props.setCurrentItemId(props.id)
+                            let currentItem = props.listData.filter(item => item.key == props.id)
+                            currentItem = currentItem[0]
+                            props.togglePriceOverlay()
+                            props.setTempItem(currentItem)                            
+                        }}
                 >
                 {props.price===null ? <span className="addPrice">Add price</span> : <>${props.price}</> }
             </span>
