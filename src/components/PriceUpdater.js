@@ -13,7 +13,7 @@ function PriceUpdater(props) {
                         placeholder="Add price"
                         onChange={props.storeText}
                         value={props.storedPrice}
-                       
+                        autoFocus
                     />
                 </form>
                 <div className="btnContainer">

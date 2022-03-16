@@ -22,7 +22,7 @@ function ListItem(props) {
             />
             <div
                 className="title-cost-container"
-                onClick={props.handleEditPane}
+                onClick={props.openEditPane}
             >
                 <span
                     className="item__title">{props.title}

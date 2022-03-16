@@ -39,7 +39,7 @@ function App() {
       key: "PauwA2Tny5jVWcYOnGREp",
       itemTitle: "ground beef",
       completed: true,
-      itemPrice: 3.4,
+      itemPrice: 3.47,
       itemQuantity: 1,
       category: "Meat"
     }
@@ -58,7 +58,6 @@ function App() {
 
 
   const [currentItemId, setCurrentItemId] = React.useState("")
-  // console.log(`Current top ID is ${currentItemId}`)
   updateTotal()
 
   const allListItems = listData.map(item => {
@@ -73,7 +72,7 @@ function App() {
         listData={listData}
         toggleComplete={toggleComplete}
         setCurrentItemId={setCurrentItemId}
-        handleEditPane={updateItem}
+        openEditPane={toggleNewItemOverlay}
         setTempItem={setTempItem}
         togglePriceOverlay={togglePriceOverlay}
         
@@ -84,6 +83,10 @@ function App() {
   function toggleNewItemOverlay(event) {
     setOverlay(prevState => !prevState)
   }
+  function closeEditOverlay() {
+    setOverlay(false)
+    setCurrentItemId("")
+  }
   function togglePriceOverlay(event){
     setPriceOverlay(!priceOverlay)
   }
@@ -91,6 +94,7 @@ function App() {
     setTempItem(initialTempItem)
     setOverlay(true)
   }
+
   function storeTextInput(event) {
     const { name, value } = event.target
     setTempItem(prevState => ({ ...prevState, [name]: value }))
@@ -110,14 +114,15 @@ function App() {
     setTempItem(initialTempItem)
   }
   function savePrice(){
-    console.log(currentItemId)
+    setListData(prevState => prevState.map(item => item.key === currentItemId ? {...item, itemPrice: tempItem.itemPrice} : item))
+    setPriceOverlay(false)
   }
-  function updateItem(event) {
-    setOverlay(!overlay)
+  function saveItemUpdate(event) {
+    setListData(prevState => prevState.map(item => item.key === currentItemId ? {...tempItem} : item))
+    setOverlay(false)
   }
 
   function toggleComplete(event) {
-
     const { name, value, type, checked } = event.target
     setListData(prevState => prevState.map(item => item.key == event.target.parentNode.id ? { ...item, [name]: checked } : item))
   }
@@ -161,10 +166,9 @@ function App() {
         } else {
           quantity = parseInt(item.itemQuantity)
         }
-       return totalCost += (price * quantity)
-       
-
+       return totalCost += (price * quantity)  
       })
+      totalCost = totalCost.toFixed(2)
   }
 
   return (
@@ -180,12 +184,15 @@ function App() {
       {overlay &&
         <NewItemOverlay
           closeOverlay={toggleNewItemOverlay}
+          closeEditOverlay = {closeEditOverlay}
           saveItem={createItem}
           storeText={storeTextInput}
           storedTitle={tempItem.itemTitle}
           storedCategory={tempItem.category}
           storedQuantity={tempItem.itemQuantity}
+          saveItemUpdate={saveItemUpdate}
           deleteItem={deleteItem}
+          currentItemId={currentItemId}
         />}
       {priceOverlay &&
         <PriceUpdater 
