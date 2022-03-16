@@ -6,8 +6,9 @@ function PriceUpdater(props) {
             <div className="overlay__container">
                 <form>
                     <input
-                        type="number"
-                        pattern="[0-9]*"
+                        type="text"
+                        inputMode="decimal"
+                        // pattern="[0-9]*"
                         className="item__price"
                         name="itemPrice"
                         placeholder="Add price"
