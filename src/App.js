@@ -4,45 +4,45 @@ import { nanoid } from 'nanoid'
 import ListItem from './components/ListItem';
 import NewItemOverlay from './components/NewItemOverlay'
 import PriceUpdater from './components/PriceUpdater'
-import EditItemOverlay from './components/EditItemOverlay'
+
 
 import Header from './components/Header'
 import ActionBar from './components/ActionBar';
 
 function App() {
   const [listData, setListData] = React.useState([
-    {
-      key: "QHG0_lWJJNSJ_ZGaqM2GH",
-      itemTitle: "milk",
-      completed: false,
-      itemPrice: null,
-      itemQuantity: 1,
-      category: "Dairy"
-    },
-    {
-      key: "fYoq6EpxlXyZzh-Uy-Q0X",
-      itemTitle: "cheese",
-      completed: false,
-      itemPrice: 2,
-      itemQuantity: 2,
-      category: "Dairy"
-    },
-    {
-      key: "edE-pRTkStlE1tYlo-yEQ",
-      itemTitle: "yogurt",
-      completed: false,
-      itemPrice: null,
-      itemQuantity: 1,
-      category: "Dairy"
-    },
-    {
-      key: "PauwA2Tny5jVWcYOnGREp",
-      itemTitle: "ground beef",
-      completed: true,
-      itemPrice: 3.47,
-      itemQuantity: 1,
-      category: "Meat"
-    }
+    // {
+    //   key: "QHG0_lWJJNSJ_ZGaqM2GH",
+    //   itemTitle: "milk",
+    //   completed: false,
+    //   itemPrice: null,
+    //   itemQuantity: 1,
+    //   category: "Dairy"
+    // },
+    // {
+    //   key: "fYoq6EpxlXyZzh-Uy-Q0X",
+    //   itemTitle: "cheese",
+    //   completed: false,
+    //   itemPrice: 2,
+    //   itemQuantity: 2,
+    //   category: "Dairy"
+    // },
+    // {
+    //   key: "edE-pRTkStlE1tYlo-yEQ",
+    //   itemTitle: "yogurt",
+    //   completed: false,
+    //   itemPrice: null,
+    //   itemQuantity: 1,
+    //   category: "Dairy"
+    // },
+    // {
+    //   key: "PauwA2Tny5jVWcYOnGREp",
+    //   itemTitle: "ground beef",
+    //   completed: true,
+    //   itemPrice: 3.47,
+    //   itemQuantity: 1,
+    //   category: "Meat"
+    // }
   ]
   )
   const [overlay, setOverlay] = React.useState(false)
@@ -75,7 +75,7 @@ function App() {
         openEditPane={toggleNewItemOverlay}
         setTempItem={setTempItem}
         togglePriceOverlay={togglePriceOverlay}
-        
+
       />
     )
   })
@@ -87,10 +87,10 @@ function App() {
     setOverlay(false)
     setCurrentItemId("")
   }
-  function togglePriceOverlay(event){
+  function togglePriceOverlay(event) {
     setPriceOverlay(!priceOverlay)
   }
-  function openNewItem(){
+  function openNewItem() {
     setTempItem(initialTempItem)
     setOverlay(true)
   }
@@ -112,37 +112,20 @@ function App() {
     }
     setListData(prevState => [...prevState, newDetails])
     setTempItem(initialTempItem)
+    setOverlay(false)
   }
-  function savePrice(){
-    setListData(prevState => prevState.map(item => item.key === currentItemId ? {...item, itemPrice: tempItem.itemPrice} : item))
+  function savePrice() {
+    setListData(prevState => prevState.map(item => item.key === currentItemId ? { ...item, itemPrice: tempItem.itemPrice } : item))
     setPriceOverlay(false)
   }
   function saveItemUpdate(event) {
-    setListData(prevState => prevState.map(item => item.key === currentItemId ? {...tempItem} : item))
+    setListData(prevState => prevState.map(item => item.key === currentItemId ? { ...tempItem } : item))
     setOverlay(false)
   }
 
   function toggleComplete(event) {
     const { name, value, type, checked } = event.target
     setListData(prevState => prevState.map(item => item.key == event.target.parentNode.id ? { ...item, [name]: checked } : item))
-  }
-  function handleChange(event) {
-    const { name, value, type, checked } = event.target
-    if (type === "checkbox") {
-      setListData(prevState => ({
-        listItems: prevState.listItems.map(
-          item => item.key == event.target.form.id ? { ...item, [name]: checked } : item
-        )
-      }))
-    }
-    else {
-      setListData(prevState => ({
-        listItems: prevState.listItems.map(
-          item => item.key == event.target.form.id ? { ...item, [name]: value } : item
-        )
-      }))
-    }
-    updateTotal()
   }
 
   function deleteItem(event) {
@@ -166,9 +149,9 @@ function App() {
         } else {
           quantity = parseInt(item.itemQuantity)
         }
-       return totalCost += (price * quantity)  
+        return totalCost += (price * quantity)
       })
-      totalCost = totalCost.toFixed(2)
+    totalCost = totalCost.toFixed(2)
   }
 
   return (
@@ -177,14 +160,19 @@ function App() {
 
       <h2 className="list-header"></h2>
       <div className="item-container">
-        {allListItems.length > 0 ? allListItems : <p className="empty-list">Add your first item </p>}
+        {allListItems.length > 0 ? allListItems : <button className="btn btn--empty-list" onClick={openNewItem}>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="#e5694f" viewBox="0 0 24 24" stroke="#ffffff" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+
+          </svg>Add your first item
+        </button>}
       </div>
       <ActionBar currentTotal={totalCost} handleClick={openNewItem} />
 
       {overlay &&
         <NewItemOverlay
           closeOverlay={toggleNewItemOverlay}
-          closeEditOverlay = {closeEditOverlay}
+          closeEditOverlay={closeEditOverlay}
           saveItem={createItem}
           storeText={storeTextInput}
           storedTitle={tempItem.itemTitle}
@@ -195,7 +183,7 @@ function App() {
           currentItemId={currentItemId}
         />}
       {priceOverlay &&
-        <PriceUpdater 
+        <PriceUpdater
           togglePriceOverlay={togglePriceOverlay}
           storedPrice={tempItem.itemPrice}
           storeText={storeTextInput}

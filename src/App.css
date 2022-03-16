@@ -192,7 +192,8 @@ header {
 .btn--update,
 .btn--cancel,
 .btn--delete,
-.btn--new-item {
+.btn--new-item,
+.btn--empty-list {
     background:none;
     border:none;
 }
@@ -200,4 +201,15 @@ header {
     color:#ff0000;
     letter-spacing:1px;
     text-transform:uppercase;
+}
+.btn--empty-list {
+    width:auto;
+    font-size:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.btn--empty-list svg {
+    width:40px;
+    margin-right:2px;
 }
