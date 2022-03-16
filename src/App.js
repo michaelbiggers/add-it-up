@@ -3,7 +3,9 @@ import './App.css';
 import { nanoid } from 'nanoid'
 import ListItem from './components/ListItem';
 import NewItemOverlay from './components/NewItemOverlay'
+import PriceUpdater from './components/PriceUpdater'
 import EditItemOverlay from './components/EditItemOverlay'
+
 import Header from './components/Header'
 import ActionBar from './components/ActionBar';
 
@@ -13,7 +15,7 @@ function App() {
       key: "QHG0_lWJJNSJ_ZGaqM2GH",
       itemTitle: "milk",
       completed: false,
-      itemPrice: 2,
+      itemPrice: null,
       itemQuantity: 1,
       category: "Dairy"
     },
@@ -21,7 +23,7 @@ function App() {
       key: "fYoq6EpxlXyZzh-Uy-Q0X",
       itemTitle: "cheese",
       completed: false,
-      itemPrice: 1,
+      itemPrice: 2,
       itemQuantity: 2,
       category: "Dairy"
     },
@@ -29,7 +31,7 @@ function App() {
       key: "edE-pRTkStlE1tYlo-yEQ",
       itemTitle: "yogurt",
       completed: false,
-      itemPrice: 1,
+      itemPrice: null,
       itemQuantity: 1,
       category: "Dairy"
     },
@@ -37,17 +39,18 @@ function App() {
       key: "PauwA2Tny5jVWcYOnGREp",
       itemTitle: "ground beef",
       completed: true,
-      itemPrice: 5,
+      itemPrice: 3.50,
       itemQuantity: 1,
       category: "Meat"
     }
   ]
   )
   const [overlay, setOverlay] = React.useState(false)
-
+  const [priceOverlay, setPriceOverlay] = React.useState(false)
   const initialTempItem = [{
     itemTitle: "",
     itemQuantity: "",
+    itemPrice: null,
     category: ""
   }]
   const [tempItem, setTempItem] = React.useState(initialTempItem)
@@ -55,8 +58,8 @@ function App() {
 
 
   const [currentItemId, setCurrentItemId] = React.useState("")
-  console.log(`Current top ID is ${currentItemId}`)
-
+  // console.log(`Current top ID is ${currentItemId}`)
+  updateTotal()
 
   const allListItems = listData.map(item => {
     return (
@@ -67,11 +70,13 @@ function App() {
         completed={item.completed}
         price={item.itemPrice}
         quantity={item.itemQuantity}
+        listData={listData}
         toggleComplete={toggleComplete}
         setCurrentItemId={setCurrentItemId}
         handleEditPane={updateItem}
         setTempItem={setTempItem}
-        listData={listData}
+        togglePriceOverlay={togglePriceOverlay}
+        
       />
     )
   })
@@ -79,7 +84,13 @@ function App() {
   function toggleNewItemOverlay(event) {
     setOverlay(prevState => !prevState)
   }
-
+  function togglePriceOverlay(event){
+    setPriceOverlay(!priceOverlay)
+  }
+  function openNewItem(){
+    setTempItem(initialTempItem)
+    setOverlay(true)
+  }
   function storeTextInput(event) {
     const { name, value } = event.target
     setTempItem(prevState => ({ ...prevState, [name]: value }))
@@ -92,15 +103,15 @@ function App() {
       itemTitle: tempItem.itemTitle,
       itemQuantity: tempItem.itemQuantity,
       completed: false,
-      itemPrice: 0,
+      itemPrice: null,
       category: tempItem.category
     }
     setListData(prevState => [...prevState, newDetails])
     setTempItem(initialTempItem)
   }
+
   function updateItem(event) {
     setOverlay(!overlay)
-
   }
 
   function toggleComplete(event) {
@@ -129,9 +140,8 @@ function App() {
 
   function deleteItem(event) {
     const { name, value, type, checked, parentNode } = event.target
-    const currentId = parentNode.id
-
-    setListData(prevState => prevState.filter(item => item.key != currentId))
+    setListData(prevState => prevState.filter(item => item.key != currentItemId))
+    setOverlay(false)
   }
 
   function updateTotal() {
@@ -139,7 +149,7 @@ function App() {
       item => {
         let price
         let quantity
-        if (!item.itemPrice) {
+        if (item.itemPrice === null) {
           price = 0
         } else {
           price = parseFloat(item.itemPrice).toFixed(2)
@@ -163,7 +173,7 @@ function App() {
       <div className="item-container">
         {allListItems.length > 0 ? allListItems : <p className="empty-list">Add your first item </p>}
       </div>
-      <ActionBar currentTotal={totalCost} handleClick={toggleNewItemOverlay} />
+      <ActionBar currentTotal={totalCost} handleClick={openNewItem} />
 
       {overlay &&
         <NewItemOverlay
@@ -173,8 +183,15 @@ function App() {
           storedTitle={tempItem.itemTitle}
           storedCategory={tempItem.category}
           storedQuantity={tempItem.itemQuantity}
+          deleteItem={deleteItem}
         />}
-
+      {priceOverlay &&
+        <PriceUpdater 
+          togglePriceOverlay={togglePriceOverlay}
+          storeText={storeTextInput}
+          storedPrice={tempItem.itemPrice}
+        />
+      }
 
     </div>
   );

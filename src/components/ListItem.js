@@ -20,13 +20,21 @@ function ListItem(props) {
                 onChange={props.toggleComplete}
                 name="completed"
             />
-            <div className="title-cost-container" onClick={props.handleEditPane}>
-                <span className="item__title">{props.title}<span className="item__quantity"> x{props.quantity}</span></span>
-                {/* <span style={{fontSize:10}}>ID: {props.id}</span> */}
+            <div
+                className="title-cost-container"
+                onClick={props.handleEditPane}
+            >
+                <span
+                    className="item__title">{props.title}
+                    <span className="item__quantity"> x{props.quantity}</span>
+                </span>
             </div>
-            <span className="item__price">${props.price}</span>
-
-            {/* <button className="item__delete" onClick={props.deleteItem}>Delete item</button> */}
+            <span
+                className="item__price"
+                onClick={props.togglePriceOverlay}
+                >
+                {props.price===null ? <span className="addPrice">Add price</span> : <>${props.price}</> }
+            </span>
 
         </div>
     )

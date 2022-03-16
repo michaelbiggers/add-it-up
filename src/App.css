@@ -124,9 +124,11 @@ header {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     cursor:pointer;
 }
-
+.addPrice {
+    font-size:14px;
+}
 /* new item overlay */
-.itemOverlay {
+.overlay {
     position:absolute;
     top:0;
     left:0;
@@ -136,32 +138,70 @@ header {
     display:flex;
     align-items:flex-end;
 }
-.itemOverlay__container {
+.overlay__container {
     background:#fff;
-    padding:1rem 1rem 4rem 1rem;
+    width:100%;
+    padding:1rem 1rem 1rem 1rem;
     border-radius:10px 10px 0 0;
 }
-.itemOverlay .item__title{
-    width:200px;
-    font-size:16px;
-    border:none;
-    padding:.5rem;
+.overlay label {
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-size:11px;
+    display:block;
+    margin-top:5px;
 }
-.itemOverlay .item__category {
+.overlay [class*="item"] {
+    
+    padding-bottom:8px;
+    
+}
+.overlay .item__title{
     width:200px;
-    padding:.5rem;
+    font-size:18px;
+    font-weight:bold;
+    border:none;
+    
+}
+.overlay .item__category {
+    width:200px;
     font-size:14px;
     border:none;
-}
-.itemOverlay .item__quantity {
-    width:200px;
+    font-style:italic;
     padding:.5rem;
+}
+.overlay .item__quantity {
+    width:200px;
     font-size:14px;
     font-style:italic;
     border:none;
     color:var(--accent-dark);
     margin-bottom:1rem;
 }
-.itemOverlay button{
+.overlay .item__price {
+    font-size:22px;
+    text-align:center;
+    margin:auto;
+}
+.overlay button{
     margin-right:1rem;
+}
+.btnContainer {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.btn--save,
+.btn--update,
+.btn--cancel,
+.btn--delete,
+.btn--new-item {
+    background:none;
+    border:none;
+}
+.btn--delete {
+    color:#ff0000;
+    
+    letter-spacing:1px;
+    text-transform:uppercase;
 }
