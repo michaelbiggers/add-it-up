@@ -19,7 +19,7 @@ function App() {
   const [priceOverlay, setPriceOverlay] = React.useState(false)
   const initialTempItem = [{
     itemTitle: "",
-    itemQuantity: "",
+    itemQuantity: "1",
     itemPrice: null,
     category: ""
   }]
