@@ -10,41 +10,11 @@ import Header from './components/Header'
 import ActionBar from './components/ActionBar';
 
 function App() {
-  const [listData, setListData] = React.useState([
-    // {
-    //   key: "QHG0_lWJJNSJ_ZGaqM2GH",
-    //   itemTitle: "milk",
-    //   completed: false,
-    //   itemPrice: null,
-    //   itemQuantity: 1,
-    //   category: "Dairy"
-    // },
-    // {
-    //   key: "fYoq6EpxlXyZzh-Uy-Q0X",
-    //   itemTitle: "cheese",
-    //   completed: false,
-    //   itemPrice: 2,
-    //   itemQuantity: 2,
-    //   category: "Dairy"
-    // },
-    // {
-    //   key: "edE-pRTkStlE1tYlo-yEQ",
-    //   itemTitle: "yogurt",
-    //   completed: false,
-    //   itemPrice: null,
-    //   itemQuantity: 1,
-    //   category: "Dairy"
-    // },
-    // {
-    //   key: "PauwA2Tny5jVWcYOnGREp",
-    //   itemTitle: "ground beef",
-    //   completed: true,
-    //   itemPrice: 3.47,
-    //   itemQuantity: 1,
-    //   category: "Meat"
-    // }
-  ]
-  )
+  
+  const [listData, setListData] = React.useState(
+    () => JSON.parse(localStorage.getItem("list")) || []
+    )
+
   const [overlay, setOverlay] = React.useState(false)
   const [priceOverlay, setPriceOverlay] = React.useState(false)
   const initialTempItem = [{
@@ -56,7 +26,11 @@ function App() {
   const [tempItem, setTempItem] = React.useState(initialTempItem)
   let totalCost = 0
 
-
+  React.useEffect(() => {
+    localStorage.setItem("list", JSON.stringify(listData))
+    console.log(localStorage.getItem("list"))
+  }, [listData])
+ 
   const [currentItemId, setCurrentItemId] = React.useState("")
   updateTotal()
 
@@ -156,18 +130,15 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      <Header currentTotal={totalCost}  />
 
-      <h2 className="list-header"></h2>
+      {/* <h2 className="list-header"></h2> */}
       <div className="item-container">
         {allListItems.length > 0 ? allListItems : <button className="btn btn--empty-list" onClick={openNewItem}>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="#e5694f" viewBox="0 0 24 24" stroke="#ffffff" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-
-          </svg>Add your first item
+          <em>Let's make that list</em>
         </button>}
       </div>
-      <ActionBar currentTotal={totalCost} handleClick={openNewItem} />
+      <ActionBar handleClick={openNewItem} />
 
       {overlay &&
         <NewItemOverlay
