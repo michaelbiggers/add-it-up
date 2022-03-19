@@ -10,10 +10,10 @@ import Header from './components/Header'
 import ActionBar from './components/ActionBar';
 
 function App() {
-  
+
   const [listData, setListData] = React.useState(
     () => JSON.parse(localStorage.getItem("list")) || []
-    )
+  )
 
   const [overlay, setOverlay] = React.useState(false)
   const [priceOverlay, setPriceOverlay] = React.useState(false)
@@ -30,7 +30,7 @@ function App() {
     localStorage.setItem("list", JSON.stringify(listData))
     console.log(localStorage.getItem("list"))
   }, [listData])
- 
+
   const [currentItemId, setCurrentItemId] = React.useState("")
   updateTotal()
 
@@ -49,7 +49,7 @@ function App() {
         openEditPane={toggleNewItemOverlay}
         setTempItem={setTempItem}
         togglePriceOverlay={togglePriceOverlay}
-
+        category={item.category}
       />
     )
   })
@@ -79,7 +79,7 @@ function App() {
     const newDetails = {
       key: newID,
       itemTitle: tempItem.itemTitle,
-      itemQuantity: tempItem.itemQuantity,
+      itemQuantity: tempItem.itemQuantity || "1",
       completed: false,
       itemPrice: null,
       category: tempItem.category
@@ -130,7 +130,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header currentTotal={totalCost}  />
+      <Header currentTotal={totalCost} />
 
       {/* <h2 className="list-header"></h2> */}
       <div className="item-container">

@@ -28,18 +28,22 @@ function ListItem(props) {
                     className="item__title">{props.title}
                     <span className="item__quantity"> x{props.quantity}</span>
                 </span>
+                <span className="item__category">
+                    {props.category}
+            </span>
             </div>
             <span
                 className="item__price"
                 onClick={() => {
-                            props.setCurrentItemId(props.id)
-                            let currentItem = props.listData.filter(item => item.key == props.id)
-                            currentItem = currentItem[0]
-                            props.togglePriceOverlay()
-                            props.setTempItem(currentItem)                            
-                        }}
-                >
-                {props.price===null ? <span className="addPrice">Add price</span> : <>${props.price}</> }
+                    props.setCurrentItemId(props.id)
+                    let currentItem = props.listData.filter(item => item.key == props.id)
+                    currentItem = currentItem[0]
+                    props.togglePriceOverlay()
+                    props.setTempItem(currentItem)
+                }}
+            >
+            
+                {props.price === null ? <span className="addPrice">Add price</span> : <>${props.price}</>}
             </span>
 
         </div>

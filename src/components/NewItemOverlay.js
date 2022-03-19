@@ -19,7 +19,7 @@ function NewItemOverlay(props) {
                     />
                     <label htmlFor="category">Store Section</label>
                     <select name="category" id="category" className="item__category" value={props.storedCategory} onChange={props.storeText}>
-                    <option value="">Select (optional)</option>
+                        <option value="">Select (optional)</option>
                         <option value="Bakery">Bakery</option>
                         <option value="Beer/Wine">Beer/Wine</option>
                         <option value="Dairy">Dairy</option>
@@ -39,7 +39,6 @@ function NewItemOverlay(props) {
                         onChange={props.storeText}
                         value={props.storedQuantity}
                     />
-                    {/* <span className="price-wrapper">$<input type="number" className="item__price" name="itemPrice" onChange={props.onChange} value={props.price} min="0" step="0.01" /> </span> */}
                 </form>
                 <div className="btnContainer">
                     {!props.currentItemId &&
