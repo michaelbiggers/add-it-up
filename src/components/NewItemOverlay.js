@@ -1,4 +1,5 @@
 import React from "react"
+import { nanoid } from 'nanoid'
 
 function NewItemOverlay(props) {
     return (
@@ -19,15 +20,8 @@ function NewItemOverlay(props) {
                     />
                     <label htmlFor="category">Store Section</label>
                     <select name="category" id="category" className="item__category" value={props.storedCategory} onChange={props.storeText}>
-                        <option value="">Select (optional)</option>
-                        <option value="Bakery">Bakery</option>
-                        <option value="Beer/Wine">Beer/Wine</option>
-                        <option value="Dairy">Dairy</option>
-                        <option value="Frozen">Frozen</option>
-                        <option value="General">General</option>
-                        <option value="Health/Beauty">Health/Beauty</option>
-                        <option value="Meats">Meats</option>
-                        <option value="Produce">Produce</option>
+                    <option value="">Select (optional)</option>
+                        {props.categoryOptions.map(item=><option value={item} key={nanoid()}>{item}</option>)}
                     </select>
                     <label htmlFor="itemQuantity">Quantity</label>
                     <input

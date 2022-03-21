@@ -14,7 +14,16 @@ function App() {
   const [listData, setListData] = React.useState(
     () => JSON.parse(localStorage.getItem("list")) || []
   )
-
+  const [categoryOptions, setCategoryOptions] = React.useState([
+    "Bakery",
+    "Beer/Wine",
+    "Dairy",
+    "Frozen",
+    "General",
+    "Health/Beauty",
+    "Meats",
+    "Produce"
+  ])
   const [overlay, setOverlay] = React.useState(false)
   const [priceOverlay, setPriceOverlay] = React.useState(false)
   const initialTempItem = [{
@@ -152,6 +161,7 @@ function App() {
           saveItemUpdate={saveItemUpdate}
           deleteItem={deleteItem}
           currentItemId={currentItemId}
+          categoryOptions = {categoryOptions}
         />}
       {priceOverlay &&
         <PriceUpdater
