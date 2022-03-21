@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css';
 import { nanoid } from 'nanoid'
+import ListItemContainer from './components/ListItemContainer';
 import ListItem from './components/ListItem';
 import NewItemOverlay from './components/NewItemOverlay'
 import PriceUpdater from './components/PriceUpdater'
@@ -26,42 +27,22 @@ function App() {
   ])
   const [overlay, setOverlay] = React.useState(false)
   const [priceOverlay, setPriceOverlay] = React.useState(false)
-  const initialTempItem = [{
-    itemTitle: "",
-    itemQuantity: "1",
-    itemPrice: null,
-    category: ""
-  }]
-  const [tempItem, setTempItem] = React.useState(initialTempItem)
+
+  // const initialTempItem = [{
+  //   itemTitle: "",
+  //   itemQuantity: "1",
+  //   itemPrice: null,
+  //   category: "Uncategorized"
+  // }]
+  const [tempItem, setTempItem] = React.useState({})
   let totalCost = 0
 
   React.useEffect(() => {
     localStorage.setItem("list", JSON.stringify(listData))
-    console.log(localStorage.getItem("list"))
   }, [listData])
 
   const [currentItemId, setCurrentItemId] = React.useState("")
   updateTotal()
-
-  const allListItems = listData.map(item => {
-    return (
-      <ListItem
-        key={item.key}
-        id={item.key}
-        title={item.itemTitle}
-        completed={item.completed}
-        price={item.itemPrice}
-        quantity={item.itemQuantity}
-        listData={listData}
-        toggleComplete={toggleComplete}
-        setCurrentItemId={setCurrentItemId}
-        openEditPane={toggleNewItemOverlay}
-        setTempItem={setTempItem}
-        togglePriceOverlay={togglePriceOverlay}
-        category={item.category}
-      />
-    )
-  })
 
   function toggleNewItemOverlay(event) {
     setOverlay(prevState => !prevState)
@@ -74,7 +55,6 @@ function App() {
     setPriceOverlay(!priceOverlay)
   }
   function openNewItem() {
-    setTempItem(initialTempItem)
     setOverlay(true)
   }
 
@@ -91,10 +71,10 @@ function App() {
       itemQuantity: tempItem.itemQuantity || "1",
       completed: false,
       itemPrice: null,
-      category: tempItem.category
+      category: tempItem.category || "Uncategorized"
     }
     setListData(prevState => [...prevState, newDetails])
-    setTempItem(initialTempItem)
+    setTempItem({})
     setOverlay(false)
   }
   function savePrice() {
@@ -105,7 +85,12 @@ function App() {
     setListData(prevState => prevState.map(item => item.key === currentItemId ? { ...tempItem } : item))
     setOverlay(false)
   }
-
+  function cancelCreationOrEdit() {
+    setOverlay(false)
+    setPriceOverlay(false)
+    setCurrentItemId("")
+    setTempItem({})
+  }
   function toggleComplete(event) {
     const { name, value, type, checked } = event.target
     setListData(prevState => prevState.map(item => item.key == event.target.parentNode.id ? { ...item, [name]: checked } : item))
@@ -141,18 +126,23 @@ function App() {
     <div className="App">
       <Header currentTotal={totalCost} />
 
-      {/* <h2 className="list-header"></h2> */}
-      <div className="item-container">
-        {allListItems.length > 0 ? allListItems : <button className="btn btn--empty-list" onClick={openNewItem}>
-          <em>Let's make that list</em>
-        </button>}
-      </div>
+      <ListItemContainer
+        listData={listData}
+        toggleComplete={toggleComplete}
+        setCurrentItemId={setCurrentItemId}
+        openEditPane={toggleNewItemOverlay}
+        setTempItem={setTempItem}
+        togglePriceOverlay={togglePriceOverlay}
+        openNewItem={openNewItem}
+        cancelCreationOrEdit={cancelCreationOrEdit}
+      />
       <ActionBar handleClick={openNewItem} />
 
       {overlay &&
         <NewItemOverlay
           closeOverlay={toggleNewItemOverlay}
           closeEditOverlay={closeEditOverlay}
+          cancelCreationOrEdit={cancelCreationOrEdit}
           saveItem={createItem}
           storeText={storeTextInput}
           storedTitle={tempItem.itemTitle}
@@ -161,7 +151,7 @@ function App() {
           saveItemUpdate={saveItemUpdate}
           deleteItem={deleteItem}
           currentItemId={currentItemId}
-          categoryOptions = {categoryOptions}
+          categoryOptions={categoryOptions}
         />}
       {priceOverlay &&
         <PriceUpdater
@@ -170,6 +160,7 @@ function App() {
           storeText={storeTextInput}
           savePrice={savePrice}
           setCurrentItemId={setCurrentItemId}
+          cancelCreationOrEdit={cancelCreationOrEdit}
         />
       }
 

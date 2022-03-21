@@ -7,7 +7,7 @@ function NewItemOverlay(props) {
             <div className="overlay__container itemOverlay__container">
                 <form>
 
-                    {/* <input type="checkbox" className="item__completed" checked={props.completed} onChange={props.onChange} name="completed" /> */}
+                    
                     <label htmlFor="itemTitle">Item Title</label>
                     <input
                         type="text"
@@ -17,15 +17,17 @@ function NewItemOverlay(props) {
                         onChange={props.storeText}
                         value={props.storedTitle}
                         autoFocus
+                        required
                     />
                     <label htmlFor="category">Store Section</label>
                     <select name="category" id="category" className="item__category" value={props.storedCategory} onChange={props.storeText}>
-                    <option value="">Select (optional)</option>
+                    <option value="Uncategorized">Select (optional)</option>
                         {props.categoryOptions.map(item=><option value={item} key={nanoid()}>{item}</option>)}
                     </select>
                     <label htmlFor="itemQuantity">Quantity</label>
                     <input
-                        type="number"
+                        type="text"
+                        inputMode="decimal"
                         className="item__quantity"
                         name="itemQuantity"
                         min="1"
@@ -50,7 +52,7 @@ function NewItemOverlay(props) {
                         </button>
                     }
 
-                    <button className="btn btn--cancel" onClick={props.closeEditOverlay}>
+                    <button className="btn btn--cancel" onClick={props.cancelCreationOrEdit}>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#660000">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                         </svg>
