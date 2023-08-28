@@ -1,4 +1,4 @@
-# Add It Up
+# Cheapo
 ### A grocery list that helps you keep to your budget
 
 In progress version available here - https://goofy-spence-da4b05.netlify.app
